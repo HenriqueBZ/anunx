@@ -36,7 +36,7 @@ const FileUpload = ({ files, errors, touched, setFieldValue }) => {
     return (
         <>
             <Typography component="h6" variant="h6" color={errors && touched ? 'error' : 'textPrimary'}>
-                                                Imagens
+                Imagens
             </Typography>
             <Typography component="div" variant="body2" color={errors && touched ? 'error' : 'textPrimary'}>
                 A primeira imagem é a foto principal do seu anúncio.
