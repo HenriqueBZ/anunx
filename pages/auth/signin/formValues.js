@@ -12,9 +12,9 @@ const validationSchema = yup.object().shape({
     password: yup.string()
         .min(6, 'Mínimo de 6 caracteres')
         .required('Campo obrigatório'),    
-    })
+})
 
  export {
      initialValues,
      validationSchema,
-}
+    }
