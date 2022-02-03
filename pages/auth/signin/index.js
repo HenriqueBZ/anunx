@@ -22,16 +22,17 @@ import useToasty from '../../../src/contexts/Toasty'
 import useStyles from './styles'
 import { Alert } from '@material-ui/lab'
 
-const Signin = () => {
+const Signin = ({ APP_URL }) => {
     const classes = useStyles()
     const router = useRouter()
     const { setToasty } = useToasty()
+    const { session } = useSession()
     
-    console.log(useSession)
+    console.log(session)
 
     const handleGoogleLogin = () => {
         signIn('google', {
-            callbackUrl: 'http://localhost:3000/user/dashboard'
+            callbackUrl: `${APP_URL}/user/dashboard`
         })
     }
     
@@ -94,12 +95,12 @@ const Signin = () => {
                                     <form onSubmit={handleSubmit}>
                                         {
                                             router.query.i === '1'
-                                            ? (
-                                                <Alert severity="error" className={classes.errorMessage}>
-                                                    Usuário ou senha inválidos
-                                                </Alert>
-                                            )
-                                            : null
+                                                ?(
+                                                    <Alert severity="error" className={classes.errorMessage}>
+                                                        Usuário ou senha inválidos
+                                                    </Alert>
+                                                )
+                                                : null
                                         }
                                       <FormControl fullWidth error={errors.email && touched.email} className={classes.formControl}>
                                           <InputLabel>E-mail</InputLabel>
@@ -153,6 +154,13 @@ const Signin = () => {
             </Container>
         </TemplateDefault>
     )
+}
+
+
+Signin.getInitialProps = async function() {
+    return {
+        APP_URL: process.env.APP_URL
+    }
 }
 
 export default Signin
