@@ -7,8 +7,10 @@ import CssBaseline from '@material-ui/core/CssBaseline'
 import { ToastyProvider } from '../src/contexts/Toasty'
 import theme from '../src/theme'
 
-export default function MyApp(props) {
-  const { Component, pageProps } = props
+export default function MyApp({
+  Component,
+  pageProps: { session, ...pageProps },
+}) {
 
   return (
     <React.Fragment>
@@ -16,11 +18,11 @@ export default function MyApp(props) {
         <title>AnunX</title>
         <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
       </Head>
-      <SessionProvider session={pageProps.session}>
+      <SessionProvider session={session}>
         <ThemeProvider theme={theme}>
           <ToastyProvider>
-            <CssBaseline />
-            <Component {...pageProps} />
+            <CssBaseline />            
+            <Component {...pageProps} />                     
           </ToastyProvider>
         </ThemeProvider>
       </SessionProvider>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { signOut, useSession } from "next-auth/react"
+import { useSession, signOut } from "next-auth/react"
 import Link from 'next/link'
 import { makeStyles } from '@material-ui/core/styles'
 
@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
 export default function ButtonAppBar() {
   const classes = useStyles()
   const [anchorUserMenu, setAnchorUserMenu] = useState(false)
-  const { session } = useSession() 
+  const { data: session } = useSession() 
   
   const openUserMenu = Boolean(anchorUserMenu)
 
@@ -51,7 +51,7 @@ export default function ButtonAppBar() {
             <Typography variant="h6" className={classes.title}>
               AnunX
             </Typography>
-            <Link href={session ? '/user/publish' : '/auth/signin'} passHref>
+            <Link href={session ? '/user/publish' : '/auth/signin' } passHref>
               <Button color="inherit" variant="outlined" className={classes.headButton}>
                 Anunciar e Vender
               </Button>
@@ -61,15 +61,15 @@ export default function ButtonAppBar() {
                 ? (
                   <IconButton color="secondary" onClick={(e) => setAnchorUserMenu(e.currentTarget)}>
                     {
-                      session.user.image
+                      session.user.name
                         ? <Avatar src={session.user.image} />
                         : <AccountCircle />
                     }
                     <Typography variant="subtitle2" color="secondary" className={classes.userName}>
                       {session.user.name}
-                    </Typography> 
+                    </Typography>
                   </IconButton>
-              ) : null
+                ) : null
             }
 
             <Menu

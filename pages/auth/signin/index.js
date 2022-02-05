@@ -2,7 +2,7 @@ import Image from 'next/image'
 import  { Formik } from 'formik'
 import axios from 'axios'
 import { useRouter } from 'next/router'
-import { useSession, signIn } from "next-auth/react"
+import { signIn, useSession } from "next-auth/react"
 
 import {
     Box,
@@ -26,13 +26,13 @@ const Signin = ({ APP_URL }) => {
     const classes = useStyles()
     const router = useRouter()
     const { setToasty } = useToasty()
-    const { session } = useSession()
-    
+    const { data: session, status } = useSession()
+        
     console.log(session)
 
     const handleGoogleLogin = () => {
         signIn('google', {
-            callbackUrl: `${APP_URL}/user/dashboard`
+            callbackUrl: 'http://localhost:3000/user/dashboard'
         })
     }
     
@@ -97,7 +97,7 @@ const Signin = ({ APP_URL }) => {
                                             router.query.i === '1'
                                                 ?(
                                                     <Alert severity="error" className={classes.errorMessage}>
-                                                        Usuário ou senha inválidos
+                                                       Usuário ou senha inválidos
                                                     </Alert>
                                                 )
                                                 : null

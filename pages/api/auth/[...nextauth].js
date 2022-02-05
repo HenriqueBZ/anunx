@@ -13,26 +13,26 @@ export default NextAuth({
         CredentialsProvider({
             name: 'Credentials',
             async authorize(credentials) {
-                const res = await axios.post(`${process.env.APP_URL}/api/auth/signin`, credentials)
+                const res = await axios.post('http://localhost:3000/api/auth/signin', credentials)
 
                 const user = res.data
 
                 if (user) {
-                    return user
+                  return user
                 } else {
-                    throw '/auth/signin?i=1'                    
+                  throw '/auth/signin?i=1'                    
                 }
             }
         })
     ],
 
-  session: {
+    session: {
       jwt: true,
-  },
+    },
 
-  jwt: {
+    jwt: {
       secret: process.env.JWT_TOKEN,
-  },
+    },
 
-  database: process.env.MONGODB_URI,
+    database: process.env.MONGODB_URI,
 })
