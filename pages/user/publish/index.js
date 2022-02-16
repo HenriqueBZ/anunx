@@ -1,6 +1,7 @@
-import axios from 'axios'
 import { Formik } from 'formik'
 import { useRouter } from 'next/router'
+import { getSession } from 'next-auth/react'
+import axios from 'axios'
 
 import {
     Box,
@@ -50,7 +51,7 @@ const Publish = ({ userId, image }) => {
         setToasty({
             open: true,
             text: 'Ops, ocorreu um erro, tente novamente',
-            severity: 'success',
+            severity: 'error',
         })
     }
 
@@ -67,7 +68,7 @@ const Publish = ({ userId, image }) => {
             }
         }
 
-        axios.post('/api/products', formData)
+        axios.post('/api/products/add', formData)
             .then(handleSuccess)
             .catch(handleError)
     }

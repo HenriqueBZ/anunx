@@ -28,7 +28,6 @@ const Signin = ({ APP_URL }) => {
     const { setToasty } = useToasty()
     const { data: session, status } = useSession()
         
-    console.log(session)
 
     const handleGoogleLogin = () => {
         signIn('google', {
