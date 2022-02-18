@@ -18,8 +18,7 @@ import TemplateDefault from '../src/templates/Default'
 import Card from '../src/components/Card'
 import dbConnect from '../src/utils/dbConnect'
 import ProductsModel from '../src/models/products'
-import formatCurrency from '../src/utils/currency'
-import { useState } from 'react'
+import { formatCurrency } from '../src/utils/currency'
 
 const useStyles = makeStyles((theme) => ({    
     productLink: {
@@ -74,13 +73,14 @@ const Home = ({ products }) => {
                     {
                         products.map(product => {
                             const category = slugify(product.category).toLocaleLowerCase()
-                            const title = slugify(product.tilte).toLocaleLowerCase()
+                            const title = slugify(product.title).toLocaleLowerCase()
+
                             return (
                                 <Grid key={product._id} item xs={12} sm={6} md={4}>
                                     <Link href={`/${category}/${title}/${product._id}`}>
                                         <a className={classes.productLink}>
                                             <Card
-                                                image={`/uploads/${product.file[0].name}`}
+                                                image={""}
                                                 title={product.title}
                                                 subtitle={formatCurrency(product.price)}                            
                                             />

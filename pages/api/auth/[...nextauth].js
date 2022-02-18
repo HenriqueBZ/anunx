@@ -1,7 +1,7 @@
-import axios from "axios"
-import NextAuth from "next-auth"
-import GoogleProvider from "next-auth/providers/google"
-import CredentialsProvider from "next-auth/providers/credentials"
+import axios from 'axios'
+import NextAuth from 'next-auth'
+import GoogleProvider from 'next-auth/providers/google'
+import CredentialsProvider from 'next-auth/providers/credentials'
 
 export default NextAuth({
     providers: [
@@ -35,16 +35,17 @@ export default NextAuth({
     },
 
     callbacks: {
-      async jwt (token, user) {        
-        if (user) {
-          token.uid = user.id
+      async jwt({ token, account }) {        
+        if (account) {
+          token.accessToken = account.access_token
         }
+        return token
+      }
+    },
 
-        return Promise.resolve(token)
-      },
-
-      async session (session, user) {        
-        session.userId = user.uid
+    callbacks: {
+      async session({ session, token, user }) {        
+        session.accessToken = token.accessToken
         return session
       }
     },

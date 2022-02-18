@@ -1,3 +1,6 @@
+import slugify from 'slugify'
+import Link from 'next/link'
+
 import {
     Container,
     Typography,
@@ -8,8 +11,6 @@ import {
     InputBase,
 } from '@material-ui/core'
 
-import Link from 'next/link'
-import slugify from 'slugify'
 
 import SearchIcon from '@material-ui/icons/Search'
 import { makeStyles } from '@material-ui/core/styles'
@@ -61,14 +62,14 @@ const List = ({ products }) => {
                             Anúncios
                         </Typography>
                         <Typography component="span" variant="subtitle2">
-                            ENCONTRADOS {produtcs.length} ANÚNCIOS
+                            ENCONTRADOS {products.length} ANÚNCIOS
                         </Typography>
                         <br/><br/>
                         <Grid container spacing={4}>
                             {
                                 products.map(product => {
                                     const category = slugify(product.category).toLocaleLowerCase()
-                                    const title = slugify(product.tilte).toLocaleLowerCase()
+                                    const title = slugify(product.title).toLocaleLowerCase()
                                     
                                     return (
                                         <Grid key={product._id} item xs={12} sm={6} md={4}>
@@ -96,26 +97,26 @@ const List = ({ products }) => {
 export async function getServerSideProps({ query }) {
     const { q } = query
 
-    const produtcs = await ProductsModel.find({
+    const products = await ProductsModel.find({
         $or: [
             { 
                 title: {
                     $regex: q,
-                    $options: '1'
+                    $options: 'i'
                 }
             },
             { 
                 description: {
                     $regex: q,
-                    $options: '1'
+                    $options: 'i'
                 }
             }
         ]
     })
 
     return {
-        Props: {
-            produtcs: JSON.parse(JSON.stringify(product))
+        props: {
+            products: JSON.parse(JSON.stringify(products))
         }
     }
 }

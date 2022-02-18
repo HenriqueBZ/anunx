@@ -24,7 +24,7 @@ const Signup = () => {
     const router = useRouter()
     const { setToasty } = useToasty()
 
-    const handleFormSubmit = async values => {
+    const handleSubmit = async values => {
         const response = await axios.post('/api/users', values)
 
         if (response.data.success) {
@@ -54,7 +54,7 @@ const Signup = () => {
                     <Formik
                         initialValues={initialValues}
                         validationSchema={validationSchema}
-                        onSubmit={handleFormSubmit}
+                        onSubmit={handleSubmit}
                     >
                         {
                             ({

@@ -31,11 +31,13 @@ const Publish = ({ userId, image }) => {
     const router = useRouter()
 
     const formValues = {
-        ...initialValues,        
+        ...initialValues,
+        userId,
+        image,        
     }
     
-    formValues.userId = userId
-    formValues.image = image
+    //formValues.userId = userId
+    //formValues.image = image
     
     const handleSuccess = () => {
         setToasty({
@@ -55,12 +57,12 @@ const Publish = ({ userId, image }) => {
         })
     }
 
-    const handleFormSubmit = (values) => {
+    const handleSubmit = (values) => {
         const formData = new FormData()
 
         for (let field in values) {
             if (field === 'files') {
-                values.files.forEach(file => {
+                values.files.forEach((file) => {
                     formData.append('files', file)
                 })
             } else {
@@ -78,7 +80,7 @@ const Publish = ({ userId, image }) => {
             <Formik
                 initialValues={formValues}
                 validationSchema={validationSchema}
-                onSubmit={handleFormSubmit}                
+                onSubmit={handleSubmit}                
             >
                 {
                     ({
@@ -86,13 +88,13 @@ const Publish = ({ userId, image }) => {
                         values,
                         errors,
                         handleChange,
-                        handleFormSubmit,
+                        handleSubmit,
                         setFieldValue,
                         isSubmitting,
                     }) => {
                         
                         return (
-                            <form onSubmit={handleFormSubmit}>
+                            <form onSubmit={handleSubmit}>
                                 <Input type="hidden" name="userId" value={values.userId} />
                                 <Input type="hidden" name="image" value={values.image} />
 
