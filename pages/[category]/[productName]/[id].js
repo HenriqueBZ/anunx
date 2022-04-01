@@ -59,7 +59,7 @@ const Product = ({ product }) => {
                                 }}
                             >
                                 {
-                                    productfile.map(file => (
+                                    product.files.map(file => (
                                         <Card key={file.name} className={classes.card}>
                                             <CardMedia
                                                 className={classes.cardMedia} 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useSession, signOut } from "next-auth/react"
+import { useSession, signOut } from "next-auth/client"
 import Link from 'next/link'
 import { makeStyles } from '@material-ui/core/styles'
 
@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
 export default function ButtonAppBar() {
   const classes = useStyles()
   const [anchorUserMenu, setAnchorUserMenu] = useState(false)
-  const { data: session } = useSession() 
+  const [ session ] = useSession() 
   
   const openUserMenu = Boolean(anchorUserMenu)
 

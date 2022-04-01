@@ -15,7 +15,7 @@ import {
 } from '@material-ui/core'
 
 import { makeStyles } from '@material-ui/core/styles'
-import { getSession } from 'next-auth/react'
+import { useSession, getSession } from 'next-auth/client'
 
 import dbConnect from '../../src/utils/dbConnect'
 import ProductsModel from '../../src/models/products'
@@ -31,12 +31,13 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const Home = (products) => {
+const Home = ({ products }) => {
   const classes = useStyles()
   const { setToasty } = useToasty()
   const [productId, setProductId] = useState()
   const [removedProducts, setRemovedProducts] = useState([])
   const [openConfirmModal, setOpenConfirmModal] = useState(false)
+  const [session] = useSession()
 
   const handleCloseModal = () => setOpenConfirmModal(false)
 
@@ -56,10 +57,9 @@ const Home = (products) => {
   }
 
   const handleSuccess = () => {
-    console.log('Ok, anúncio removido!')
-
     setOpenConfirmModal(false)
     setRemovedProducts([...removedProducts, productId ])
+
     setToasty({
       open: true,
       severity: 'success',
@@ -92,12 +92,15 @@ const Home = (products) => {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCloseModal}>Cancelar</Button>
+          <Button onClick={handleCloseModal}>
+            Cancelar
+          </Button>
           <Button onClick={handleConfirmRemove} autoFocus>
             Confirmar
           </Button>
         </DialogActions>
       </Dialog>
+      
       <Container maxWidth="sm" textAlign="center">
         <Typography component="h1" variant="h2" align="center">
           Meus Anúncios
@@ -117,7 +120,7 @@ const Home = (products) => {
         }
         <Grid container spacing={4}>
           {
-            products.map(product => {
+            products.map((product) => {
               if (removedProducts.includes(product._id)) return null
 
               return (

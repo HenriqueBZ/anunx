@@ -1,54 +1,41 @@
-import axios from 'axios'
-import NextAuth from 'next-auth'
-import GoogleProvider from 'next-auth/providers/google'
-import CredentialsProvider from 'next-auth/providers/credentials'
+import axios from "axios"
+import NextAuth from "next-auth"
+import Providers from "next-auth/providers"
 
 export default NextAuth({
-    providers: [
-        GoogleProvider({
-            clientId: process.env.GOOGLE_CLIENT_ID,
-            clientSecret: process.env.GOOGLE_CLIENT_SECRET
-        }),
-        
-        CredentialsProvider({
-            name: 'Credentials',
-            async authorize(credentials) {
-                const res = await axios.post(`${process.env.APP_URL}/api/auth/signin`, credentials)
+  
+  providers: [
+      
+    Providers.Google({
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET
+    }),
 
-                const user = res.data
+    Providers.Credentials({        
+      name: 'Credentials',
+      async authorize(credentials) {
+        const res = await axios.post(`${process.env.NEXTAUTH_URL}/api/auth/signin`, credentials)
 
-                if (user) {
-                  return user
-                } else {
-                  throw '/auth/signin?i=1'                    
-                }
-            }
-        })
-    ],
+        const user = res.data
 
-    session: {
-      jwt: true,
-    },
-
-    jwt: {
-      secret: process.env.JWT_TOKEN,
-    },
-
-    callbacks: {
-      async jwt({ token, account }) {        
-        if (account) {
-          token.accessToken = account.access_token
+        if (user) {
+          return user
+        } else {
+          throw '/auth/signin?i=1'
         }
-        return token
       }
-    },
+    })
+      
+  ],
 
-    callbacks: {
-      async session({ session, token, user }) {        
-        session.accessToken = token.accessToken
-        return session
-      }
-    },
+  session: {
+    jwt: true,
+  },
 
-    database: process.env.MONGODB_URI,
+  jwt: {
+    secret: process.env.JWT_TOKEN,
+  },
+
+  
+  database: process.env.MONGODB_URI
 })

@@ -1,6 +1,6 @@
 import { Formik } from 'formik'
 import { useRouter } from 'next/router'
-import { getSession } from 'next-auth/react'
+import { getSession } from 'next-auth/client'
 import axios from 'axios'
 
 import {
@@ -31,13 +31,11 @@ const Publish = ({ userId, image }) => {
     const router = useRouter()
 
     const formValues = {
-        ...initialValues,
-        userId,
-        image,        
+        ...initialValues,                
     }
     
-    //formValues.userId = userId
-    //formValues.image = image
+    formValues.userId = userId
+    formValues.image = image
     
     const handleSuccess = () => {
         setToasty({
@@ -62,7 +60,7 @@ const Publish = ({ userId, image }) => {
 
         for (let field in values) {
             if (field === 'files') {
-                values.files.forEach((file) => {
+                values.files.forEach(file => {
                     formData.append('files', file)
                 })
             } else {
@@ -279,7 +277,7 @@ export async function getServerSideProps({ req }) {
 
     return {
         props: {
-            userId,
+            //userId,
             image: user.image,
         }
     }
