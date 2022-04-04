@@ -71,7 +71,7 @@ const Home = ({ products }) => {
                 <br />
                 <Grid container spacing={4}>
                     {
-                        products.map(product => {
+                        products.map((product) => {
                             const category = slugify(product.category).toLocaleLowerCase()
                             const title = slugify(product.title).toLocaleLowerCase()
 
@@ -80,7 +80,7 @@ const Home = ({ products }) => {
                                     <Link href={`/${category}/${title}/${product._id}`}>
                                         <a className={classes.productLink}>
                                             <Card
-                                                image={""}
+                                                image={`/uploads/${product.files[0].name}`}
                                                 title={product.title}
                                                 subtitle={formatCurrency(product.price)}                            
                                             />

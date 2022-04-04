@@ -31,11 +31,12 @@ const Publish = ({ userId, image }) => {
     const router = useRouter()
 
     const formValues = {
-        ...initialValues,                
+        ...initialValues,                    
     }
     
     formValues.userId = userId
     formValues.image = image
+    
     
     const handleSuccess = () => {
         setToasty({
@@ -55,7 +56,7 @@ const Publish = ({ userId, image }) => {
         })
     }
 
-    const handleSubmit = (values) => {
+    const handleSubmit = async (values) => {
         const formData = new FormData()
 
         for (let field in values) {
@@ -277,7 +278,7 @@ export async function getServerSideProps({ req }) {
 
     return {
         props: {
-            //userId,
+            userId: userId || null,
             image: user.image,
         }
     }

@@ -1,9 +1,10 @@
 import { useState } from 'react'
-import Link from 'next/link'
 import axios from 'axios'
 
 import {
-  Button,  
+  Button,
+  Box,
+  CardActions,  
   Container,
   Grid,
   Typography,  
@@ -16,8 +17,9 @@ import {
 
 import { makeStyles } from '@material-ui/core/styles'
 import { useSession, getSession } from 'next-auth/client'
-
+import Link from 'next/link'
 import dbConnect from '../../src/utils/dbConnect'
+
 import ProductsModel from '../../src/models/products'
 import TemplateDefault from '../../src/templates/Default'
 import Card from '../../src/components/Card'
@@ -32,12 +34,13 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const Home = ({ products }) => {
-  const classes = useStyles()
-  const { setToasty } = useToasty()
   const [productId, setProductId] = useState()
   const [removedProducts, setRemovedProducts] = useState([])
   const [openConfirmModal, setOpenConfirmModal] = useState(false)
   const [session] = useSession()
+  const { setToasty } = useToasty()
+  
+  const classes = useStyles()
 
   const handleCloseModal = () => setOpenConfirmModal(false)
 
@@ -58,7 +61,7 @@ const Home = ({ products }) => {
 
   const handleSuccess = () => {
     setOpenConfirmModal(false)
-    setRemovedProducts([...removedProducts, productId ])
+    setRemovedProducts([...removedProducts, productId])
 
     setToasty({
       open: true,
@@ -68,7 +71,7 @@ const Home = ({ products }) => {
   }
 
   const handleError = () => {
-    console.log('Ops, deu erro!')
+    
     setOpenConfirmModal(false)
     setToasty({
       open: true,
@@ -101,26 +104,31 @@ const Home = ({ products }) => {
         </DialogActions>
       </Dialog>
       
-      <Container maxWidth="sm" textAlign="center">
+      <Container maxWidth="sm">
         <Typography component="h1" variant="h2" align="center">
           Meus Anúncios
         </Typography>
-        <link href={'/user/publish'} passHref>        
-          <Button variant="contained" color="primary" className={classes.buttonAdd}>
-            Publicar Novo Anúncio
-          </Button>
-        </link>
+        <Box textAlign="center">
+          <Link href={'/user/publish'} passHref>        
+            <Button variant="contained" color="primary" className={classes.buttonAdd}>
+              Publicar Novo Anúncio
+            </Button>
+          </Link>
+        </Box>
       </Container>
-      <Container maxWidth="md">
+
         {
-          products.length === 0 &&
-          <Typography component="div" variant="body1" align="center" color="textPrimary" gutterBottom>
-            Nenhum anúncio publicado
-          </Typography>
+          products.length === 0 && (
+            <Typography component="div" variant="body1" align="center" color="textPrimary" gutterBottom>
+              Nenhum anúncio publicado
+            </Typography>
+          )
         }
+      
+      <Container maxWidth="md">
         <Grid container spacing={4}>
           {
-            products.map((product) => {
+            products.map(product => {
               if (removedProducts.includes(product._id)) return null
 
               return (
@@ -131,12 +139,14 @@ const Home = ({ products }) => {
                     subtitle={formatCurrency(product.price)}
                     actions={
                       <>
-                        <Button size="small" color="primary">
-                          Editar
-                        </Button>
-                        <Button size="small" color="primary" onClick={() => handleClickRemove(product._id)}>
-                          Remover
-                        </Button>
+                        <CardActions>
+                          <Button size="small" color="primary">
+                            Editar
+                          </Button>
+                          <Button size="small" color="primary" onClick={() => handleClickRemove(product._id)}>
+                            Remover
+                          </Button>
+                        </CardActions>
                       </>
                     }
                   />              
