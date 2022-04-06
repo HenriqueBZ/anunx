@@ -1,6 +1,5 @@
 import Image from "next/image"
 import { Formik } from "formik"
-import axios from "axios"
 import { useRouter } from "next/router"
 import { signIn, useSession } from "next-auth/client"
 
@@ -17,7 +16,7 @@ import {
 } from "@material-ui/core"
 
 import TemplateDefault from "../../../src/templates/Default"
-import { initialValues, validationSchema } from "./formValues"
+import { initialValues, validationSchema } from "../../../src/utils/formValuesSignin"
 import MuiAlert from "@material-ui/lab/Alert"
 import useToasty from "../../../src/contexts/Toasty"
 import useStyles from "./styles"

@@ -15,7 +15,7 @@ import {
 } from '@material-ui/core'
 
 import TemplateDefault from '../../../src/templates/Default'
-import { initialValues, validationSchema } from './formValues'
+import { initialValues, validationSchema } from '../../../src/utils/formValuesSignup'
 import useToasty from '../../../src/contexts/Toasty'
 import useStyles from './styles'
 

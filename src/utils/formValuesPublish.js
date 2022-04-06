@@ -27,7 +27,4 @@ const validationSchema = yup.object().shape({
     files: yup.array().min(1, 'Envie pelo menos uma foto').required('Campo obrigatório')
 })
 
-export {
-    initialValues,
-    validationSchema,
-}
+export { initialValues, validationSchema }

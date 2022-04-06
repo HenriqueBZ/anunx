@@ -21,7 +21,4 @@ const validationSchema = yup.object().shape({
         .oneOf([yup.ref('password'), null], 'As senhas precisam ser iguais'),
 })
 
- export {
-     initialValues,
-     validationSchema,
- }
+export { initialValues, validationSchema }
