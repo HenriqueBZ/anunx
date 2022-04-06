@@ -12,6 +12,7 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
+  CardActions,
 } from '@material-ui/core'
 
 import { makeStyles } from '@material-ui/core/styles'
@@ -48,7 +49,7 @@ const Home = ({ products }) => {
   }
 
   const handleConfirmRemove = () => {
-    axios.delete('api/products/delete', {
+    axios.delete('/api/products/delete', {
       data: {
         id: productId
       }
@@ -136,13 +137,15 @@ const Home = ({ products }) => {
                     title={product.title}
                     subtitle={formatCurrency(product.price)}
                     actions={
-                      <>                        
-                        <Button size="small" color="primary">
-                          Editar
-                        </Button>
-                        <Button size="small" color="primary" onClick={() => handleClickRemove(product._id)}>
-                          Remover
-                        </Button>                        
+                      <>
+                        <CardActions>                       
+                          <Button size="small" color="primary">
+                            Editar
+                          </Button>
+                          <Button size="small" color="primary" onClick={() => handleClickRemove(product._id)}>
+                            Remover
+                          </Button>
+                        </CardActions>                        
                       </>
                     }
                   />              

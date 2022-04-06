@@ -1,6 +1,7 @@
 import  { Formik } from 'formik'
 import axios from 'axios'
 import { useRouter } from 'next/router'
+import { makeStyles } from '@material-ui/core'
 
 import {
     Box,
@@ -17,7 +18,26 @@ import {
 import TemplateDefault from '../../../src/templates/Default'
 import { initialValues, validationSchema } from '../../../src/utils/formValuesSignup'
 import useToasty from '../../../src/contexts/Toasty'
-import useStyles from './styles'
+
+const useStyles = makeStyles((theme) => ({
+    container: {
+        marginBottom: 30
+    },
+    box: {
+        backgroundColor: theme.palette.background.white,
+        padding: theme.spacing(3),
+    },
+    formControl: {
+        marginBottom: theme.spacing(1),
+    },
+    submit: {
+        margin: theme.spacing(3, 0, 2),
+    },
+    loading: {
+        display: 'block',
+        margin: '10px auto',
+    }
+}))
 
 const Signup = () => {
     const classes = useStyles()

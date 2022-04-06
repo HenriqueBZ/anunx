@@ -16,7 +16,8 @@ export const ToastyProvider = ({ children }) => {
                 open={toasty.open}
                 severity={toasty.severity}
                 text={toasty.text}
-                onClose={() => setToasty({
+                onClose={() =>
+                    setToasty({
                     ...toasty,
                     open: false,
                 })}

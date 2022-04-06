@@ -2,6 +2,7 @@ import { Formik } from 'formik'
 import { useRouter } from 'next/router'
 import { getSession } from 'next-auth/client'
 import axios from 'axios'
+import { makeStyles } from '@material-ui/core'
 
 import {
     Box,
@@ -23,7 +24,19 @@ import FileUpload from '../../../src/components/FileUpload'
 import useToasty from '../../../src/contexts/Toasty'
 import { initialValues, validationSchema } from '../../../src/utils/formValuesPublish'
 
-import useStyles from './styles'
+const useStyles = makeStyles((theme) => ({       
+    boxContainer: {
+        paddingBottom: theme.spacing(3),
+    },
+    box: {
+        backgroundColor: theme.palette.background.white,
+        padding: theme.spacing(3),
+    },    
+    inputLabel: {
+        fontWeight: 400,
+        color: theme.palette.primary.main,
+    },    
+}))
 
 const Publish = ({ userId, image }) => {
     const classes = useStyles()
