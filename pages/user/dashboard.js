@@ -4,7 +4,6 @@ import axios from 'axios'
 import {
   Button,
   Box,
-  CardActions,  
   Container,
   Grid,
   Typography,  
@@ -16,7 +15,7 @@ import {
 } from '@material-ui/core'
 
 import { makeStyles } from '@material-ui/core/styles'
-import { useSession, getSession } from 'next-auth/client'
+import { getSession } from 'next-auth/client'
 import Link from 'next/link'
 import dbConnect from '../../src/utils/dbConnect'
 
@@ -36,8 +35,7 @@ const useStyles = makeStyles((theme) => ({
 const Home = ({ products }) => {
   const [productId, setProductId] = useState()
   const [removedProducts, setRemovedProducts] = useState([])
-  const [openConfirmModal, setOpenConfirmModal] = useState(false)
-  const [session] = useSession()
+  const [openConfirmModal, setOpenConfirmModal] = useState(false)  
   const { setToasty } = useToasty()
   
   const classes = useStyles()
@@ -138,15 +136,13 @@ const Home = ({ products }) => {
                     title={product.title}
                     subtitle={formatCurrency(product.price)}
                     actions={
-                      <>
-                        <CardActions>
-                          <Button size="small" color="primary">
-                            Editar
-                          </Button>
-                          <Button size="small" color="primary" onClick={() => handleClickRemove(product._id)}>
-                            Remover
-                          </Button>
-                        </CardActions>
+                      <>                        
+                        <Button size="small" color="primary">
+                          Editar
+                        </Button>
+                        <Button size="small" color="primary" onClick={() => handleClickRemove(product._id)}>
+                          Remover
+                        </Button>                        
                       </>
                     }
                   />              
